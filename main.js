@@ -18,7 +18,7 @@ getPinCodeData();
 const getPinCode = (pincodeData) => {
   Object.entries(pincodeData).forEach((item) => {
     if (!map.has(item[1].pincode)) {
-      map.set(item[1].pincode, { data: item[1] });
+      map.set(item[0], { data: item[1] });
     }
   });
   convertToJSON(map);
@@ -30,11 +30,11 @@ const convertToJSON = (map) => {
     obj[key] = value;
   }
   document.querySelector("button").addEventListener("click", () => {
-    saveFile(obj);
+    saveFile(JSON.parse(obj));
   });
 };
 
-async function saveFile() {
+async function saveFile(json) {
   try {
     // create a new handle
     const newHandle = await window.showSaveFilePicker();
@@ -43,7 +43,7 @@ async function saveFile() {
     const writableStream = await newHandle.createWritable();
 
     // write our file
-    await writableStream.write(obj);
+    await writableStream.write(json);
 
     // close the file and write the contents to disk.
     await writableStream.close();
