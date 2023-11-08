@@ -18,7 +18,11 @@ getPinCodeData();
 const getPinCode = (pincodeData) => {
   Object.entries(pincodeData).forEach((item) => {
     if (!map.has(item[1].pincode)) {
-      map.set(item[0], { data: item[1] });
+      map.set(item[1].pincode, {
+        pincode: item[1].pincode,
+        district: item[1].districtName,
+        state: item[1].stateName,
+      });
     }
   });
   convertToJSON(map);
@@ -30,7 +34,7 @@ const convertToJSON = (map) => {
     obj[key] = value;
   }
   document.querySelector("button").addEventListener("click", () => {
-    saveFile(JSON.parse(obj));
+    saveFile(JSON.stringify(Object.values(obj)));
   });
 };
 
