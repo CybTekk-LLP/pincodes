@@ -29,7 +29,9 @@ const convertToJSON = (map) => {
   for (let [key, value] of map) {
     obj[key] = value;
   }
-  saveFile(obj);
+  document.querySelector("button").addEventListener("click", () => {
+    saveFile(obj);
+  });
 };
 
 async function saveFile() {
